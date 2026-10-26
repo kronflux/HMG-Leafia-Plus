@@ -20,10 +20,11 @@ def manifest_lines(path):
     if not os.path.exists(path):
         return []
     out = []
-    for l in open(path):
-        p = l.split()
-        if len(p) == 5 and not p[0].startswith('#'):
-            out.append(p)
+    with open(path) as f:
+        for l in f:
+            p = l.split()
+            if len(p) == 5 and not p[0].startswith('#'):
+                out.append(p)
     return out
 
 
@@ -41,15 +42,23 @@ def built_for(patch_set):
 def main():
     check = '--check' in sys.argv[1:]
     sets = {}
-    for l in open(os.path.join(PATCHES, 'cars')):
-        p = l.split()
-        if len(p) >= 2 and not p[0].startswith('#'):
-            sets[p[0]] = p[1]
-    raw = open(COMPAT, encoding='utf-8').read()
+    with open(os.path.join(PATCHES, 'cars')) as f:
+        for l in f:
+            p = l.split()
+            if len(p) >= 2 and not p[0].startswith('#'):
+                sets[p[0]] = p[1]
+    with open(COMPAT, encoding='utf-8') as f:
+        raw = f.read()
     db = json.loads(raw)
     for v in db['variants']:
         prefixes = v['product_prefix'] if isinstance(v['product_prefix'], list) else [v['product_prefix']]
-        found = {sets[c] for c in sets for p in prefixes if c.startswith(p) or p.startswith(c)}
+        # Follow cars.sh: the first matching prefix selects the patch set.
+        found = set()
+        for p in prefixes:
+            for c in sets:
+                if p.startswith(c):
+                    found.add(sets[c])
+                    break
         if len(found) > 1:
             sys.exit('%s: product prefixes map to several patch sets %s' % (v['id'], sorted(found)))
         b = built_for(found.pop()) if found else {}
@@ -63,7 +72,8 @@ def main():
         return
     if check:
         sys.exit('docs/data/compat.json "built" lists are out of date: run tools/compat-built.py')
-    open(COMPAT, 'w', encoding='utf-8').write(new)
+    with open(COMPAT, 'w', encoding='utf-8', newline='\n') as f:
+        f.write(new)
     print('updated docs/data/compat.json')
 
 

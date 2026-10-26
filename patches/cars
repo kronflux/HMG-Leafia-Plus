@@ -1,6 +1,8 @@
 # <ro.build.product prefix> <patch set> <car name>
+# First match wins: list firmware-specific prefixes before the region prefix.
 CVEV.USA. ev6 Kia EV6 (US)
 NEEV.USA. neev Hyundai Ioniq 5 (US)
 NEEV23.USA. neev Hyundai Ioniq 5 2023 (US)
+CVEV.CAN.0000.V014. ev6_ca_v014 Kia EV6 (Canada)
 CVEV.CAN. ev6_ca Kia EV6 (Canada)
 NEEV.CAN. neev_ca Hyundai Ioniq 5 (Canada)

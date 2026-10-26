@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-25",
+  "updated": "2026-10-26",
   "repo": "VysseCodes/HMG-Leafia-Plus",
   "variants": [
     {
@@ -51,6 +51,56 @@
         ],
         "/system/lib/libautoreceiver_infobank.so": [
           "c08410a8d32a615b1aa805cd8a243d52"
+        ]
+      }
+    },
+    {
+      "id": "kia-ev6-ca-250818",
+      "name": "Kia EV6",
+      "region": "Canada",
+      "chip": "TCC803x",
+      "product_prefix": "CVEV.CAN.0000.V014.",
+      "years": "2022–2024",
+      "firmware": "V014.010.250818",
+      "status": "testing",
+      "verified": [
+        "Installation and restoration in the head-unit emulator"
+      ],
+      "notes": "Dedicated V014 projection and CarPlay patches.",
+      "stock": {
+        "/system/app/HKMC_DiPO.apk": "b0dd627e2e1dc2d46b756f8ed6a739fb",
+        "/system/app/HKMC_DiPO.odex": "0ad742efcfb746a29b4173cb8b40bb22",
+        "/system/app/HKMC_GPM.apk": "1c6582df542c1e80ced7ee4875a4507b",
+        "/system/app/HKMC_GPM.odex": "323c4b26a8d98253a1c5cbf2aa4858b3",
+        "/system/app/HKMC_Navi_ExSL.apk": "f307c59a5a6b837ae80cb0eab8b9f4fc",
+        "/system/app/HKMC_Navi_ExSL.odex": "c36d972de4a366e3f26254a899439250",
+        "/system/app/Iap2ServerApp.apk": "f5d60c0e7a1fd8851bfbbfb012ad90b6",
+        "/system/app/Iap2ServerApp.odex": "b1264cc2504d89aa41aa388df2bd6821",
+        "/system/lib/libautoreceiver_infobank.so": "139270c81b9f05912711ff57978037be"
+      },
+      "built": {
+        "/system/app/HKMC_BtSettings.apk": [
+          "93ecaa97597a79be2a10728e45c72b33",
+          "b977e268fbe73cb5637c4413647a7dea",
+          "cd98c36db6857ed174757c6010a36494",
+          "e7c90e78f45f7e6b9c90ddd7a238b566"
+        ],
+        "/system/app/HKMC_DiPO.apk": [
+          "ee9f0cd05e24951c408a4943eb65a2db",
+          "ffe7174d4fd466b5f56c13de5b6c790d"
+        ],
+        "/system/app/HKMC_GPM.apk": [
+          "41594fb595dcbd9aad14a2fbc138e4c6"
+        ],
+        "/system/app/HKMC_Navi_ExSL.apk": [
+          "5c4409f7f979fcdcd2c15195b205e5e1"
+        ],
+        "/system/app/Iap2ServerApp.apk": [
+          "6c62d4219c204def28ee2a2d42a20055",
+          "9ed450e1b91abf96780484fe47ab6b4b"
+        ],
+        "/system/lib/libautoreceiver_infobank.so": [
+          "e56ecfe889d71aa637cd05d25df5a303"
         ]
       }
     },
