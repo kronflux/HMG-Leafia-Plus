@@ -14,14 +14,16 @@ if grep -rn --include='*.sh' 'printf' "$ROOT/packages/wireless-carplay-aa" \
     echo "build-package: printf in package scripts (not on the head unit) - use echo or putline" >&2
     exit 1
 fi
+python3 "$ROOT/tools/patch-catalog.py" --check
 STAGE=$(mktemp -d)
+trap 'rm -rf "$STAGE"' EXIT HUP INT TERM
 cp -R "$ROOT/packages/wireless-carplay-aa/." "$STAGE/inner"
 rm -f "$STAGE/inner/README.md"
 mkdir -p "$STAGE/inner/tools" "$STAGE/inner/recipes"
 cp "$ROOT/tools/lpatch/lpatch" "$STAGE/inner/tools/lpatch"
 cp "$ROOT"/recipes/*.recipe "$STAGE/inner/recipes/"
 cp -R "$ROOT/patches" "$STAGE/inner/patches"
-rm -f "$STAGE/inner/patches/README.md"
+rm -f "$STAGE/inner/patches/README.md" "$STAGE/inner/patches/catalog.json"
 # which source this package was built from; logged at install, read by the Leafia kit
 echo "$(git -C "$ROOT" describe --always --dirty 2>/dev/null || echo unknown) $(date -u +%Y-%m-%d)" > "$STAGE/inner/BUILD"
 mkdir -p "$STAGE/outer/packages"

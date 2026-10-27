@@ -52,7 +52,10 @@
         "/system/lib/libautoreceiver_infobank.so": [
           "c08410a8d32a615b1aa805cd8a243d52"
         ]
-      }
+      },
+      "patch_families": [
+        "set-968174f6bf2bc19049e3c7f5b51d0630cfaaecc92e256d6c6ec0059c0a85397d"
+      ]
     },
     {
       "id": "kia-ev6-ca-250818",
@@ -102,7 +105,10 @@
         "/system/lib/libautoreceiver_infobank.so": [
           "e56ecfe889d71aa637cd05d25df5a303"
         ]
-      }
+      },
+      "patch_families": [
+        "set-dff5dc417f72ebe24d843d2378a4f81417090be31afe3fca3fbec06bd4aefbd8"
+      ]
     },
     {
       "id": "kia-ev6-ca-260206",
@@ -152,7 +158,10 @@
         "/system/lib/libautoreceiver_infobank.so": [
           "c08410a8d32a615b1aa805cd8a243d52"
         ]
-      }
+      },
+      "patch_families": [
+        "set-d1987af68e3ab1b78796bd749058ad157244097fd3b5190b774afe1abc25f388"
+      ]
     },
     {
       "id": "hyundai-ioniq5-us-260507",
@@ -207,7 +216,10 @@
         "/system/lib/libautoreceiver_infobank.so": [
           "c08410a8d32a615b1aa805cd8a243d52"
         ]
-      }
+      },
+      "patch_families": [
+        "set-fa775d57288ae0f317e0b28094e32046f35273cea27ab243510dbd84475f1324"
+      ]
     },
     {
       "id": "hyundai-ioniq5-ca-260206",
@@ -257,7 +269,10 @@
         "/system/lib/libautoreceiver_infobank.so": [
           "84321500e6921b9222d5b91ff3ca75b2"
         ]
-      }
+      },
+      "patch_families": [
+        "set-10430033b08bf16255273e980c6029b58ace7add3fd7b690495bc7a08649d52a"
+      ]
     }
   ]
 }

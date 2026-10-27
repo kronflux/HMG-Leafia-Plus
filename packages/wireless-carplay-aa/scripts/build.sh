@@ -51,7 +51,7 @@ build_one() {
         _src=$(stock_src "/system/app/$_name.apk")
         _odex=$(stock_src "/system/app/$_name.odex")
         if ! "$(lp_bin)" delta "patches/$_patch" "$_odex" "$_tmp" >> "$LOG" 2>&1; then
-            log "$_f $_odex is not the stock file this patch needs"
+            log "$_f could not rebuild $_name from $_odex"
             return 1
         fi
         if ! "$(lp_bin)" zipadd "$_src" "$_tmp" "$_out" >> "$LOG" 2>&1; then
@@ -63,7 +63,7 @@ build_one() {
     else
         _src=$(stock_src "/system/lib/$_name")
         if ! "$(lp_bin)" delta "patches/$_patch" "$_src" "$_out" >> "$LOG" 2>&1; then
-            log "$_f $_src is not the stock file this patch needs"
+            log "$_f could not rebuild $_name from $_src"
             return 1
         fi
     fi
@@ -78,12 +78,13 @@ build_one() {
 
 build_payloads() {
     local _v _m _part _kind _name _patch _want
-    _v=$(car_variant) || { log "FAIL: no patch set for this car"; return 1; }
-    _m="patches/$_v/manifest"
-    if [ ! -s "$_m" ]; then
-        log "FAIL: missing $_m"
-        return 1
-    fi
+    catalog_validate_selection "$CATALOG_SELECTION" || { log "FAIL: invalid patch selection"; return 1; }
+    mkdir -p "$BUILD_DIR" || return 1
+    catalog_inventory "$BUILD_DIR/inventory" || return 1
+    _v=$(catalog_variant) || return 1
+    catalog_matches "$_v" "$BUILD_DIR/inventory" || { log "FAIL: original files changed after selection"; return 1; }
+    _m="$BUILD_DIR/manifest"
+    catalog_manifest > "$_m" || return 1
     mkdir -p "$BUILD_DIR/2_tbt" "$BUILD_DIR/3_bridge" || return 1
     while read -r _part _kind _name _patch _want; do
         [ -n "$_part" ] || continue

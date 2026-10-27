@@ -23,11 +23,8 @@ PROP_ON=t
 PROP_OFF=f
 # the bridge builds, rebuilt on the unit by scripts/build.sh
 FILES=/data/nemesis/build/wireless.carplay.aa/3_bridge
-# ---- car: picked from the firmware's own product id (patches/cars). The
-# expected APKs come from that car's patches/<car>/manifest:
-#   SUM_TBT_*  projection.tbt's build, which must be live before we install
-#   SUM_*      this part's bridge build
-# They are saved in the backup folder at install, for uninstall.
+# Read the selected original/output identities. Legacy installations retain
+# their product lookup until their original package has restored them.
 CARS_DIR=../../patches
 . ../../scripts/cars.sh
 VARIANT=$(car_variant) || VARIANT=unknown

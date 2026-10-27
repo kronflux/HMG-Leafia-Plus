@@ -12,9 +12,8 @@ LIB_BASE=libautoreceiver_infobank.so
 LIB_LIVE=/system/lib/libautoreceiver_infobank.so
 # the modified apps and library, rebuilt on the unit by scripts/build.sh
 FILES=/data/nemesis/build/wireless.carplay.aa/2_tbt
-# ---- car: picked from the firmware's own product id (patches/cars); the stock
-# files must then match that car's checksums (patches/<car>/stock) exactly.
-# A live file that does not match is left alone.
+# Read the selected original/output identities. Legacy installations retain
+# their product lookup until their original package has restored them.
 CARS_DIR=../../patches
 . ../../scripts/cars.sh
 VARIANT=$(car_variant) || VARIANT=unknown

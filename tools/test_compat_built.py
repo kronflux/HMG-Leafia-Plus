@@ -22,17 +22,18 @@ class CompatibilityBuilds(unittest.TestCase):
         self.patches = self.root / 'patches'
         self.patches.mkdir()
         self.db = self.root / 'compat.json'
-        for family, digest in [('v014', '1' * 32), ('v015', '2' * 32)]:
-            folder = self.patches / family
-            folder.mkdir()
-            (folder / 'manifest').write_text(
-                f'2_tbt app GPM {family}/GPM.lpd {digest}\n')
-        (self.patches / 'cars').write_text(
-            'CVEV.CAN.0000.V014. v014 Kia EV6\n'
-            'CVEV.CAN. v015 Kia EV6\n'
-            'ALIAS.CAN. v015 Another model\n')
+
+    def write_catalog(self, general_first=False):
+        families = [
+            {'id': 'v014', 'aliases': ['CVEV.CAN.0000.V014.'], 'outputs': [
+                dict(part='2_tbt', kind='app', name='GPM', patch='v014/GPM.lpd', md5='1' * 32)]},
+            {'id': 'v015', 'aliases': ['CVEV.CAN.', 'ALIAS.CAN.'], 'outputs': [
+                dict(part='2_tbt', kind='app', name='GPM', patch='v015/GPM.lpd', md5='2' * 32)]}]
+        if general_first: families.reverse()
+        (self.patches / 'catalog.json').write_text(json.dumps({'version': 1, 'families': families}))
 
     def write_variants(self, *prefixes):
+        self.write_catalog()
         self.db.write_text(json.dumps({'variants': [
             {'id': str(i), 'product_prefix': p} for i, p in enumerate(prefixes)
         ]}))
@@ -51,10 +52,9 @@ class CompatibilityBuilds(unittest.TestCase):
         self.assertEqual(rows[0]['built']['/system/app/GPM.apk'], ['1' * 32])
         self.assertEqual(rows[1]['built']['/system/app/GPM.apk'], ['2' * 32])
 
-    def test_order_matches_installer_even_when_general_entry_is_first(self):
-        (self.patches / 'cars').write_text(
-            'CVEV.CAN. v015 Kia EV6\nCVEV.CAN.0000.V014. v014 Kia EV6\n')
+    def test_alias_order_for_legacy_display_rows(self):
         self.write_variants('CVEV.CAN.0000.V014.')
+        self.write_catalog(general_first=True)
         self.assertEqual(self.run_generator()[0]['built']['/system/app/GPM.apk'],
                          ['2' * 32])
 
@@ -69,6 +69,14 @@ class CompatibilityBuilds(unittest.TestCase):
         with self.assertRaisesRegex(SystemExit, 'several patch sets'):
             self.run_generator()
         self.assertEqual(self.db.read_bytes(), before)
+
+    def test_explicit_binding_can_combine_firmware_families(self):
+        self.write_variants('CVEV.CAN.')
+        data = json.loads(self.db.read_text())
+        data['variants'][0]['patch_families'] = ['v014', 'v015']
+        self.db.write_text(json.dumps(data))
+        self.assertEqual(self.run_generator()[0]['built']['/system/app/GPM.apk'],
+                         ['1' * 32, '2' * 32])
 
     def test_unknown_prefix_does_not_inherit_a_known_family(self):
         self.write_variants('UNKNOWN.')

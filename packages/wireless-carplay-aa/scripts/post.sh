@@ -1,11 +1,11 @@
 #!/system/bin/sh
 . ./scripts/common.sh
 # every way out of this run starts again whatever it, or an earlier run, stopped
-trap apps_release EXIT
+trap '[ $? = 0 ] || { clean_build; discard_uninstalled_selection; }; apps_release' EXIT
 log "postinstall wireless.carplay.aa"
 check_legacy || { toast "Install failed: uninstall the separate wireless/projection packages first, reboot, then try again."; exit 1; }
 check_remount || { toast "Install failed: could not unlock the system partition. Reboot the head unit and try again."; exit 1; }
-decide_mode
+decide_mode || exit 1
 if [ "$MODE" = basic ]; then
     log "basic mode: $MODE_WHY - installing: $(part_name 1_projection)"
     has_wifi_module || { log "FAIL: this head unit has no Wi-Fi module"; exit 1; }
@@ -49,11 +49,7 @@ if [ -n "$EV6_TEST_ROOT" ]; then log "test mode - not rebooting"; exit 0; fi
 log "all parts installed ($MODE mode: $PARTS) - rebooting"
 retire_usb_descriptor
 if [ "$MODE" = basic ]; then
-    if [ -n "$MODE_UPDATE" ]; then
-        toast "Installed wireless Android Auto (basic mode). For turn-by-turn and wireless CarPlay, update the head unit to its newest software, then install again. Restarting now."
-    else
-        toast "Installed wireless Android Auto (basic mode). Turn-by-turn and wireless CarPlay need a build for this car: please share the report saved on the USB drive. Restarting now."
-    fi
+    toast "Installed wireless Android Auto (basic mode). Turn-by-turn and wireless CarPlay need compatible projection files: please share the report saved on the USB drive. Restarting now."
 else
     toast "Installed. Restarting now: remove the USB drive while it restarts. Leaving it in can stop CarPlay or Android Auto connecting the first time."
 fi

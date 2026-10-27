@@ -1,0 +1,446 @@
+{
+  "version": 1,
+  "families": [
+    {
+      "id": "set-968174f6bf2bc19049e3c7f5b51d0630cfaaecc92e256d6c6ec0059c0a85397d",
+      "name": "Kia EV6 (US)",
+      "aliases": [
+        "CVEV.USA."
+      ],
+      "revision": "navigation-pass-through-usb-filter-1",
+      "capabilities": [
+        "cluster-api",
+        "wifi-hardware"
+      ],
+      "requires": {
+        "2_tbt": [],
+        "3_bridge": [
+          "2_tbt"
+        ]
+      },
+      "inputs": {
+        "/system/app/HKMC_DiPO.apk": "01446fb79dc4fcfc826271ba18158fa4",
+        "/system/app/HKMC_DiPO.odex": "a565e180fdb0b73d6520f28c91cdba63",
+        "/system/app/HKMC_GPM.apk": "c155b0fb97384e645987dc1bd0f85922",
+        "/system/app/HKMC_GPM.odex": "96cd7c27a9db19acb3900f21f57ea9f0",
+        "/system/app/HKMC_Navi_ExSL.apk": "19559e742b1d21550aa8f0324e8e6d36",
+        "/system/app/HKMC_Navi_ExSL.odex": "9cf41f78ce312b3762b354714d12eec3",
+        "/system/app/Iap2ServerApp.apk": "fde208439f993986a60396e759797a01",
+        "/system/app/Iap2ServerApp.odex": "03950e4b691f846e5478a5a69818c65e",
+        "/system/lib/libautoreceiver_infobank.so": "48ee793af8b86052503b8c952b034731"
+      },
+      "outputs": [
+        {
+          "part": "2_tbt",
+          "kind": "app",
+          "name": "HKMC_GPM",
+          "patch": "ev6/HKMC_GPM.tbt.lpd",
+          "md5": "7c6df0f570677157326b105b6b87bfc2",
+          "sha256": "87020519ec4838a4a75826223100d9f42adbae3a6d233e736d42c1bafd81a361"
+        },
+        {
+          "part": "2_tbt",
+          "kind": "app",
+          "name": "HKMC_DiPO",
+          "patch": "ev6/HKMC_DiPO.tbt.lpd",
+          "md5": "4d7452a71fc2c120032ef1734d15f0fb",
+          "sha256": "5ed7651628a8f05bf3817aa646cf93dd5078e2fafd2fcf0e8ed05615eaa4596f"
+        },
+        {
+          "part": "2_tbt",
+          "kind": "app",
+          "name": "Iap2ServerApp",
+          "patch": "ev6/Iap2ServerApp.tbt.lpd",
+          "md5": "7e90fa7d8a161ade71e11dc15e56c410",
+          "sha256": "1d0d5d48c5b580dbc5980628d27decb25e007c45089382cd1d3b66354d1c3fbb"
+        },
+        {
+          "part": "2_tbt",
+          "kind": "app",
+          "name": "HKMC_Navi_ExSL",
+          "patch": "ev6/HKMC_Navi_ExSL.tbt.lpd",
+          "md5": "b1fc88d42954c41e7944e9247647e9ad",
+          "sha256": "63ba8d19d6efc3c69402fd44766d4b1e09640ff34df107a626dd5c0b530aeece"
+        },
+        {
+          "part": "3_bridge",
+          "kind": "app",
+          "name": "Iap2ServerApp",
+          "patch": "ev6/Iap2ServerApp.bridge.lpd",
+          "md5": "75d7fea4d2009be6aa5c840118f58c94",
+          "sha256": "bb35176e2356ac2f4ff1d39cda96e0f676a545d5971002c33eb3b1eff9489d83"
+        },
+        {
+          "part": "3_bridge",
+          "kind": "app",
+          "name": "HKMC_DiPO",
+          "patch": "ev6/HKMC_DiPO.bridge.lpd",
+          "md5": "154204dd700d02a6d47b4d7b6550c8f6",
+          "sha256": "09df307a2d21ed48cf7bfeba9fb07696cb189e0773515857a3a95e360cbfac9b"
+        },
+        {
+          "part": "2_tbt",
+          "kind": "file",
+          "name": "libautoreceiver_infobank.so",
+          "patch": "common/libautoreceiver_infobank.tbt.lpd",
+          "md5": "c08410a8d32a615b1aa805cd8a243d52",
+          "sha256": "abd169325498fb5114db814fe69c64fe8fa52d1be4a71098d36e16e0378126ea"
+        }
+      ],
+      "legacy_id": "ev6"
+    },
+    {
+      "id": "set-fa775d57288ae0f317e0b28094e32046f35273cea27ab243510dbd84475f1324",
+      "name": "Hyundai Ioniq 5 (US)",
+      "aliases": [
+        "NEEV.USA.",
+        "NEEV23.USA."
+      ],
+      "revision": "navigation-pass-through-usb-filter-1",
+      "capabilities": [
+        "cluster-api",
+        "wifi-hardware"
+      ],
+      "requires": {
+        "2_tbt": [],
+        "3_bridge": [
+          "2_tbt"
+        ]
+      },
+      "inputs": {
+        "/system/app/HKMC_DiPO.apk": "1b080aa15a39acc19d04ff56d731f484",
+        "/system/app/HKMC_DiPO.odex": "460433b8ec27354f5b787d2382e7efaf",
+        "/system/app/HKMC_GPM.apk": "2e9a5e738fffad4bca38421971a07364",
+        "/system/app/HKMC_GPM.odex": "6e67470f8ccd5afcd6c1408ac3fd9459",
+        "/system/app/HKMC_Navi_ExSL.apk": "19559e742b1d21550aa8f0324e8e6d36",
+        "/system/app/HKMC_Navi_ExSL.odex": "0617cbf37079ec5c2e6408f1fb7862b9",
+        "/system/app/Iap2ServerApp.apk": "fde208439f993986a60396e759797a01",
+        "/system/app/Iap2ServerApp.odex": "43c40662352937dd2c25a154dfa60b9d",
+        "/system/lib/libautoreceiver_infobank.so": "48ee793af8b86052503b8c952b034731"
+      },
+      "outputs": [
+        {
+          "part": "2_tbt",
+          "kind": "app",
+          "name": "HKMC_GPM",
+          "patch": "neev/HKMC_GPM.tbt.lpd",
+          "md5": "0308224b94c7e1b81d372a8ea1535aed",
+          "sha256": "a62e03a35dce05f3406b3bf445d3a81e998dd6fd18e4ffd606419e7619bccea9"
+        },
+        {
+          "part": "2_tbt",
+          "kind": "app",
+          "name": "HKMC_DiPO",
+          "patch": "neev/HKMC_DiPO.tbt.lpd",
+          "md5": "fe7112ddc94f7cd0e36abbd89f00aff4",
+          "sha256": "065ca16eeb05b500bd241f1bba310f5c833be8ab56dc4d8a99c326398bda4698"
+        },
+        {
+          "part": "2_tbt",
+          "kind": "app",
+          "name": "Iap2ServerApp",
+          "patch": "neev/Iap2ServerApp.tbt.lpd",
+          "md5": "7e90fa7d8a161ade71e11dc15e56c410",
+          "sha256": "2deea390658fb5abe2ff560eeda65fefdf87ce15bf05fdfd5ebf752bae14fcc2"
+        },
+        {
+          "part": "2_tbt",
+          "kind": "app",
+          "name": "HKMC_Navi_ExSL",
+          "patch": "neev/HKMC_Navi_ExSL.tbt.lpd",
+          "md5": "b1fc88d42954c41e7944e9247647e9ad",
+          "sha256": "37bbf3e54c4278977a20f22d8255748752deb92017ba30ed402e3b3ba5584d30"
+        },
+        {
+          "part": "3_bridge",
+          "kind": "app",
+          "name": "Iap2ServerApp",
+          "patch": "neev/Iap2ServerApp.bridge.lpd",
+          "md5": "75d7fea4d2009be6aa5c840118f58c94",
+          "sha256": "2afd77c45f5ce004fe90bb589fa7d5f75838a5a43c5db25dbc84d3be6775aedc"
+        },
+        {
+          "part": "3_bridge",
+          "kind": "app",
+          "name": "HKMC_DiPO",
+          "patch": "neev/HKMC_DiPO.bridge.lpd",
+          "md5": "e7c1f412233482e12bde8543c6c1e24f",
+          "sha256": "e98fcb9281bd2eeb8eb402928556907a7577aa5c8b398a41327fa968bf510518"
+        },
+        {
+          "part": "2_tbt",
+          "kind": "file",
+          "name": "libautoreceiver_infobank.so",
+          "patch": "common/libautoreceiver_infobank.tbt.lpd",
+          "md5": "c08410a8d32a615b1aa805cd8a243d52",
+          "sha256": "abd169325498fb5114db814fe69c64fe8fa52d1be4a71098d36e16e0378126ea"
+        }
+      ],
+      "legacy_id": "neev"
+    },
+    {
+      "id": "set-dff5dc417f72ebe24d843d2378a4f81417090be31afe3fca3fbec06bd4aefbd8",
+      "name": "Kia EV6 (Canada)",
+      "aliases": [
+        "CVEV.CAN.0000.V014."
+      ],
+      "revision": "navigation-pass-through-usb-filter-1",
+      "capabilities": [
+        "cluster-api",
+        "wifi-hardware"
+      ],
+      "requires": {
+        "2_tbt": [],
+        "3_bridge": [
+          "2_tbt"
+        ]
+      },
+      "inputs": {
+        "/system/app/HKMC_DiPO.apk": "b0dd627e2e1dc2d46b756f8ed6a739fb",
+        "/system/app/HKMC_DiPO.odex": "0ad742efcfb746a29b4173cb8b40bb22",
+        "/system/app/HKMC_GPM.apk": "1c6582df542c1e80ced7ee4875a4507b",
+        "/system/app/HKMC_GPM.odex": "323c4b26a8d98253a1c5cbf2aa4858b3",
+        "/system/app/HKMC_Navi_ExSL.apk": "f307c59a5a6b837ae80cb0eab8b9f4fc",
+        "/system/app/HKMC_Navi_ExSL.odex": "c36d972de4a366e3f26254a899439250",
+        "/system/app/Iap2ServerApp.apk": "f5d60c0e7a1fd8851bfbbfb012ad90b6",
+        "/system/app/Iap2ServerApp.odex": "b1264cc2504d89aa41aa388df2bd6821",
+        "/system/lib/libautoreceiver_infobank.so": "139270c81b9f05912711ff57978037be"
+      },
+      "outputs": [
+        {
+          "part": "2_tbt",
+          "kind": "app",
+          "name": "HKMC_GPM",
+          "patch": "ev6_ca_v014/HKMC_GPM.tbt.lpd",
+          "md5": "41594fb595dcbd9aad14a2fbc138e4c6",
+          "sha256": "b28d99d6c945cf6b50b38810e98f69a7789f49298b602a242dd54c8c91e426ae"
+        },
+        {
+          "part": "2_tbt",
+          "kind": "app",
+          "name": "HKMC_DiPO",
+          "patch": "ev6_ca_v014/HKMC_DiPO.tbt.lpd",
+          "md5": "ffe7174d4fd466b5f56c13de5b6c790d",
+          "sha256": "72070501a8056cf75d6b15233c5bc9ee181cc3d42ac92f6a92bfe642425fff98"
+        },
+        {
+          "part": "2_tbt",
+          "kind": "app",
+          "name": "Iap2ServerApp",
+          "patch": "ev6_ca_v014/Iap2ServerApp.tbt.lpd",
+          "md5": "6c62d4219c204def28ee2a2d42a20055",
+          "sha256": "18631bba0fdea2dd8360ce0c4a5e2c4910de781635289b8dcd9cd6d5bbf8e6be"
+        },
+        {
+          "part": "2_tbt",
+          "kind": "app",
+          "name": "HKMC_Navi_ExSL",
+          "patch": "ev6_ca_v014/HKMC_Navi_ExSL.tbt.lpd",
+          "md5": "5c4409f7f979fcdcd2c15195b205e5e1",
+          "sha256": "ad7f02f6d9618449854eb8dadf5de0edd8cc5829a7af7ecb25f239ee53000614"
+        },
+        {
+          "part": "3_bridge",
+          "kind": "app",
+          "name": "Iap2ServerApp",
+          "patch": "ev6_ca_v014/Iap2ServerApp.bridge.lpd",
+          "md5": "9ed450e1b91abf96780484fe47ab6b4b",
+          "sha256": "e01a3a67854d8f37b83213a5e8ba0fcff6f8a6cabe9b1adf1e425d3045adf973"
+        },
+        {
+          "part": "3_bridge",
+          "kind": "app",
+          "name": "HKMC_DiPO",
+          "patch": "ev6_ca_v014/HKMC_DiPO.bridge.lpd",
+          "md5": "ee9f0cd05e24951c408a4943eb65a2db",
+          "sha256": "347cd5129cb3ec97f1c7a810beb0ff5e6cc073629896bb392450ba53ac2ad38e"
+        },
+        {
+          "part": "2_tbt",
+          "kind": "file",
+          "name": "libautoreceiver_infobank.so",
+          "patch": "ev6_ca_v014/libautoreceiver_infobank.tbt.lpd",
+          "md5": "e56ecfe889d71aa637cd05d25df5a303",
+          "sha256": "a7f2a5e3c424b5bfe87d0a157670348f48c75b0ad307c1b1bd068f16b1cb5580"
+        }
+      ],
+      "legacy_id": "ev6_ca_v014"
+    },
+    {
+      "id": "set-d1987af68e3ab1b78796bd749058ad157244097fd3b5190b774afe1abc25f388",
+      "name": "Kia EV6 (Canada)",
+      "aliases": [
+        "CVEV.CAN."
+      ],
+      "revision": "navigation-pass-through-usb-filter-1",
+      "capabilities": [
+        "cluster-api",
+        "wifi-hardware"
+      ],
+      "requires": {
+        "2_tbt": [],
+        "3_bridge": [
+          "2_tbt"
+        ]
+      },
+      "inputs": {
+        "/system/app/HKMC_DiPO.apk": "e804f5785698387e27fa8875d1db625f",
+        "/system/app/HKMC_DiPO.odex": "a565e180fdb0b73d6520f28c91cdba63",
+        "/system/app/HKMC_GPM.apk": "9e06512ccc9090338082ad38c74a223d",
+        "/system/app/HKMC_GPM.odex": "96cd7c27a9db19acb3900f21f57ea9f0",
+        "/system/app/HKMC_Navi_ExSL.apk": "19559e742b1d21550aa8f0324e8e6d36",
+        "/system/app/HKMC_Navi_ExSL.odex": "9cf41f78ce312b3762b354714d12eec3",
+        "/system/app/Iap2ServerApp.apk": "fde208439f993986a60396e759797a01",
+        "/system/app/Iap2ServerApp.odex": "03950e4b691f846e5478a5a69818c65e",
+        "/system/lib/libautoreceiver_infobank.so": "48ee793af8b86052503b8c952b034731"
+      },
+      "outputs": [
+        {
+          "part": "2_tbt",
+          "kind": "app",
+          "name": "HKMC_GPM",
+          "patch": "ev6/HKMC_GPM.tbt.lpd",
+          "md5": "1929356d4d7126b28ffd3a6f13392fcf",
+          "sha256": "87020519ec4838a4a75826223100d9f42adbae3a6d233e736d42c1bafd81a361"
+        },
+        {
+          "part": "2_tbt",
+          "kind": "app",
+          "name": "HKMC_DiPO",
+          "patch": "ev6/HKMC_DiPO.tbt.lpd",
+          "md5": "cd8581e0b11490b4733dbb3299b9f9e1",
+          "sha256": "5ed7651628a8f05bf3817aa646cf93dd5078e2fafd2fcf0e8ed05615eaa4596f"
+        },
+        {
+          "part": "2_tbt",
+          "kind": "app",
+          "name": "Iap2ServerApp",
+          "patch": "ev6/Iap2ServerApp.tbt.lpd",
+          "md5": "7e90fa7d8a161ade71e11dc15e56c410",
+          "sha256": "1d0d5d48c5b580dbc5980628d27decb25e007c45089382cd1d3b66354d1c3fbb"
+        },
+        {
+          "part": "2_tbt",
+          "kind": "app",
+          "name": "HKMC_Navi_ExSL",
+          "patch": "ev6/HKMC_Navi_ExSL.tbt.lpd",
+          "md5": "b1fc88d42954c41e7944e9247647e9ad",
+          "sha256": "63ba8d19d6efc3c69402fd44766d4b1e09640ff34df107a626dd5c0b530aeece"
+        },
+        {
+          "part": "3_bridge",
+          "kind": "app",
+          "name": "Iap2ServerApp",
+          "patch": "ev6/Iap2ServerApp.bridge.lpd",
+          "md5": "75d7fea4d2009be6aa5c840118f58c94",
+          "sha256": "bb35176e2356ac2f4ff1d39cda96e0f676a545d5971002c33eb3b1eff9489d83"
+        },
+        {
+          "part": "3_bridge",
+          "kind": "app",
+          "name": "HKMC_DiPO",
+          "patch": "ev6/HKMC_DiPO.bridge.lpd",
+          "md5": "83482d5aec90573af95d3bc4e310151f",
+          "sha256": "09df307a2d21ed48cf7bfeba9fb07696cb189e0773515857a3a95e360cbfac9b"
+        },
+        {
+          "part": "2_tbt",
+          "kind": "file",
+          "name": "libautoreceiver_infobank.so",
+          "patch": "common/libautoreceiver_infobank.tbt.lpd",
+          "md5": "c08410a8d32a615b1aa805cd8a243d52",
+          "sha256": "abd169325498fb5114db814fe69c64fe8fa52d1be4a71098d36e16e0378126ea"
+        }
+      ],
+      "legacy_id": "ev6_ca"
+    },
+    {
+      "id": "set-10430033b08bf16255273e980c6029b58ace7add3fd7b690495bc7a08649d52a",
+      "name": "Hyundai Ioniq 5 (Canada)",
+      "aliases": [
+        "NEEV.CAN."
+      ],
+      "revision": "navigation-pass-through-usb-filter-1",
+      "capabilities": [
+        "cluster-api",
+        "wifi-hardware"
+      ],
+      "requires": {
+        "2_tbt": [],
+        "3_bridge": [
+          "2_tbt"
+        ]
+      },
+      "inputs": {
+        "/system/app/HKMC_DiPO.apk": "740312d716c6c20bdda096c3f3ab01f2",
+        "/system/app/HKMC_DiPO.odex": "528ebc9a58b567a1b283dcc2bf6b457b",
+        "/system/app/HKMC_GPM.apk": "132fdd537a655e0f12f63b5636f5e686",
+        "/system/app/HKMC_GPM.odex": "d994d696db846d93713138854a9837f3",
+        "/system/app/HKMC_Navi_ExSL.apk": "eb38eeffd6800cb7fff4a888f7939efd",
+        "/system/app/HKMC_Navi_ExSL.odex": "b513d46184229efcd18eab84d30013c3",
+        "/system/app/Iap2ServerApp.apk": "fde208439f993986a60396e759797a01",
+        "/system/app/Iap2ServerApp.odex": "43c40662352937dd2c25a154dfa60b9d",
+        "/system/lib/libautoreceiver_infobank.so": "a0bea1c4992ea983a8190c4e032d7190"
+      },
+      "outputs": [
+        {
+          "part": "2_tbt",
+          "kind": "app",
+          "name": "HKMC_GPM",
+          "patch": "neev_ca/HKMC_GPM.tbt.lpd",
+          "md5": "e99223a2f17723660345205242054b12",
+          "sha256": "1ae0f87ac0a33b0f1ace12988a818bfbdd3bcec727a2075d8adfe5089d0320c9"
+        },
+        {
+          "part": "2_tbt",
+          "kind": "app",
+          "name": "HKMC_DiPO",
+          "patch": "neev_ca/HKMC_DiPO.tbt.lpd",
+          "md5": "b7c041ed4448ab6d0e07d6c9f6733e51",
+          "sha256": "748aaeef8fc52619f3121c75490fafd7710bc6761ba53e228e3bbdba6322bea5"
+        },
+        {
+          "part": "2_tbt",
+          "kind": "app",
+          "name": "Iap2ServerApp",
+          "patch": "neev_ca/Iap2ServerApp.tbt.lpd",
+          "md5": "7e90fa7d8a161ade71e11dc15e56c410",
+          "sha256": "8bf1d57d4527705ee751cd4f167b93bdc5fb3aab3fcd4781c5e67d4c6e5fd998"
+        },
+        {
+          "part": "2_tbt",
+          "kind": "app",
+          "name": "HKMC_Navi_ExSL",
+          "patch": "neev_ca/HKMC_Navi_ExSL.tbt.lpd",
+          "md5": "5afa7611235c0960fb82ad4b4329f516",
+          "sha256": "d72b6fbfd0b326645cfd59f482ed56b3326f336137bc602cd21890c51501d4d5"
+        },
+        {
+          "part": "3_bridge",
+          "kind": "app",
+          "name": "Iap2ServerApp",
+          "patch": "neev_ca/Iap2ServerApp.bridge.lpd",
+          "md5": "75d7fea4d2009be6aa5c840118f58c94",
+          "sha256": "e55e2568e3aec40008545c15c5a0ba9a8403fd1d84438c8452e5f3b3b55be7d9"
+        },
+        {
+          "part": "3_bridge",
+          "kind": "app",
+          "name": "HKMC_DiPO",
+          "patch": "neev_ca/HKMC_DiPO.bridge.lpd",
+          "md5": "4150a328e5447ad4511a92cccd49ce10",
+          "sha256": "26eba8bde7bc57c0254ad4770a5e55e301e092c70d0e103a89313ecb9a86d6e7"
+        },
+        {
+          "part": "2_tbt",
+          "kind": "file",
+          "name": "libautoreceiver_infobank.so",
+          "patch": "neev_ca/libautoreceiver_infobank.tbt.lpd",
+          "md5": "84321500e6921b9222d5b91ff3ca75b2",
+          "sha256": "0c399ae0127d91f40be5696a9f0b7725a0bbd97abfc737236caf2641748f8046"
+        }
+      ],
+      "legacy_id": "neev_ca"
+    }
+  ]
+}

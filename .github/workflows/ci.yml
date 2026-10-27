@@ -2,9 +2,9 @@ name: CI
 
 on:
   pull_request:
-    branches: [main]
+    branches: [content-selection]
   push:
-    branches: [main]
+    branches: [content-selection]
   # the release workflow runs all of CI first
   workflow_call:
 
@@ -16,7 +16,7 @@ permissions:
   contents: read
 
 # Actions are pinned to full commit IDs (tags can be moved); the comment says which
-# release that is. Build artifacts are only uploaded for pushes to main, so nothing
+# release that is. Build artifacts are only uploaded for pushes to content-selection, so nothing
 # built from a pull request's code is published as a download.
 #
 # Each check runs only when something it covers changed (see the "changes" job);
@@ -69,7 +69,7 @@ jobs:
           out lpatch  '^(tools/lpatch/|recipes/|tools/mkdelta\.py|tools/mkrecipe\.py)'
           out ev6aac  '^(src/ev6aac/|packages/wireless-carplay-aa/comp/4_audio/files/libev6aac\.so)'
           out kits    '^(kits/|docs/downloads/|recipes/|tools/build-kit\.sh|tools/check-downloads\.sh|tools/lpatch/lpatch$)'
-          out package '^(packages/|patches/|recipes/|tools/build-package\.sh|tools/lpatch/lpatch$|tools/compat-built\.py|tools/test_compat_built\.py|docs/data/compat\.json)'
+          out package '^(packages/|patches/|recipes/|tools/build-package\.sh|tools/lpatch/lpatch$|tools/compat-built\.py|tools/test_compat_built\.py|tools/patch-catalog\.py|tools/tests/|tools/mock/|docs/data/compat\.json)'
 
   build-lpatch:
     name: Build and Test Lpatch
@@ -175,6 +175,8 @@ jobs:
         run: |
           python3 -m unittest discover -s tools -p test_compat_built.py
           python3 tools/compat-built.py --check
+          python3 -m unittest discover -s tools/tests -p test_patch_catalog.py
+          sh tools/mock/catalog-test.sh
 
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: github.event_name == 'push'

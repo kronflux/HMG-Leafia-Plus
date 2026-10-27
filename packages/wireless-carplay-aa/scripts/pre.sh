@@ -3,7 +3,7 @@
 log "preinstall wireless.carplay.aa"
 [ -f BUILD ] && log "build $(cat BUILD)"
 # a refused install ends with any apps an earlier run left stopped started again
-trap '[ $? = 0 ] || apps_release' EXIT
+trap '[ $? = 0 ] || { clean_build; discard_uninstalled_selection; apps_release; }' EXIT
 [ -x /system/xbin/nemesis ] || { log "FAIL: /system/xbin/nemesis missing"; exit 1; }
 for _p in $PARTS; do
     [ -d "comp/$_p/scripts" ] || { log "FAIL: payload part $_p missing"; exit 1; }
@@ -15,7 +15,7 @@ case "$(wifi_hw)" in
         exit 1 ;;
     unknown) log "Wi-Fi chip: not started yet (no wlan interface, no driver error)" ;;
 esac
-decide_mode
+decide_mode || exit 1
 if [ "$MODE" = basic ]; then
     log "basic mode: $MODE_WHY - installing wireless projection only (wireless Android Auto)"
     if ! has_wifi_module; then

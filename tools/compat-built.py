@@ -4,9 +4,9 @@
 usage: compat-built.py [--check]
 
 For each car on the compatibility page, "built" lists the md5 of every file our
-package installs on it (from patches/<set>/manifest and patches/common/optional),
+package installs on it (from patches/catalog.json and patches/common/optional),
 so the page can tell a unit that already runs Leafia from one with unknown files.
-The cars table (patches/cars) maps the car's product prefix to its patch set.
+Explicit patch_families bind display rows to the catalog; aliases cover older rows.
 With --check nothing is written; it exits 1 if compat.json is out of date (CI).
 """
 import json, os, sys
@@ -30,7 +30,13 @@ def manifest_lines(path):
 
 def built_for(patch_set):
     built = {}
-    lines = manifest_lines(os.path.join(PATCHES, patch_set, 'manifest'))
+    with open(os.path.join(PATCHES, 'catalog.json'), encoding='utf-8') as f:
+        catalog = json.load(f)
+    family = next((f for f in catalog['families'] if f['id'] == patch_set), None)
+    if family is None:
+        raise ValueError('unknown patch family: ' + patch_set)
+    lines = [[o[k] for k in ('part', 'kind', 'name', 'patch', 'md5')]
+             for o in family['outputs']]
     lines += manifest_lines(os.path.join(PATCHES, 'common', 'optional'))
     for part, kind, name, _patch, md5 in lines:
         f = '/system/app/%s.apk' % name if kind == 'app' else '/system/lib/%s' % name
@@ -42,26 +48,31 @@ def built_for(patch_set):
 def main():
     check = '--check' in sys.argv[1:]
     sets = {}
-    with open(os.path.join(PATCHES, 'cars')) as f:
-        for l in f:
-            p = l.split()
-            if len(p) >= 2 and not p[0].startswith('#'):
-                sets[p[0]] = p[1]
+    with open(os.path.join(PATCHES, 'catalog.json'), encoding='utf-8') as f:
+        catalog = json.load(f)
+    for family in catalog['families']:
+        for alias in family['aliases']:
+            sets[alias] = family['id']
     with open(COMPAT, encoding='utf-8') as f:
         raw = f.read()
     db = json.loads(raw)
     for v in db['variants']:
         prefixes = v['product_prefix'] if isinstance(v['product_prefix'], list) else [v['product_prefix']]
-        # Follow cars.sh: the first matching prefix selects the patch set.
+        # Legacy display rows use ordered aliases; explicit bindings can list several families.
         found = set()
         for p in prefixes:
             for c in sets:
                 if p.startswith(c):
                     found.add(sets[c])
                     break
-        if len(found) > 1:
+        if len(found) > 1 and 'patch_families' not in v:
             sys.exit('%s: product prefixes map to several patch sets %s' % (v['id'], sorted(found)))
-        b = built_for(found.pop()) if found else {}
+        bindings = v.get('patch_families', sorted(found))
+        combined = {}
+        for family in bindings:
+            for path, digests in built_for(family).items():
+                combined.setdefault(path, set()).update(digests)
+        b = {path: sorted(digests) for path, digests in sorted(combined.items())}
         if b:
             v['built'] = b
         else:

@@ -116,6 +116,10 @@ find "$X/pkg" -name '*.sh' | while read -r f; do
         -e "s|^export PATH=$X/stub:$R/data/nemesis/bin:|export PATH=$R/data/nemesis/bin:$X/stub:|" \
         -e "s|^\(export PATH=.*\)$|\1:/usr/bin:/bin|" "$f"
 done
+# The compiled data uses the same absolute paths as the rewritten hooks.
+if [ -f "$X/pkg/patches/catalog" ]; then
+    sed -i "s|/system/|$R/system/|g" "$X/pkg/patches/catalog"
+fi
 [ "$MOCK_WIFI_CLIENT" = 1 ] && MOCK_USB_DESCRIPTOR=1 && : > "$R/storage/usb0/LEAFIA-WIFI-CLIENT"
 [ "$MOCK_USB_DESCRIPTOR" = 1 ] && printf '[nemesis]\nversion=1.0\ntype=install\npath=packages/wireless.carplay.aa.zip\n' > "$R/storage/usb0/NEMESIS.data"
 
@@ -127,7 +131,7 @@ fi
 stopped_left() { ls "$X" | grep '^pm_disabled_' | sed 's/^pm_disabled_//' | tr '\n' ' '; }
 [ "$MOCK_ADB_TCP" = 1 ] && echo 1 > "$X/prop_persist.service.adb.tcp.enable"
 adb_props() { echo "enable=$(cat "$X/prop_persist.service.adb.tcp.enable" 2>/dev/null) port=$(cat "$X/prop_persist.adb.tcp.port" 2>/dev/null)"; }
-cd "$X/pkg"; export LPATCH="$X/stub/lpatch_q"
+cd "$X/pkg"; export LPATCH="$X/stub/lpatch_q" CATALOG_SYSTEM="$R/system"
 ok=1
 if "$SH" scripts/pre.sh > "$X/pre.log" 2>&1; then
     "$SH" scripts/post.sh > "$X/post.log" 2>&1 || true

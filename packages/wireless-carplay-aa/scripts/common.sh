@@ -12,9 +12,8 @@
 # Not included: TCP ADB (adb.tcp), the temporary debug logging, and Android Auto
 # car data (projection.cardata, EV-specific) - that installs separately on top of this.
 # Uninstall undoes the parts in reverse order, back to stock.
-# Supported: Kia EV6 (CVEV) and Hyundai Ioniq 5 (NEEV) on 260507 firmware,
-# Kia K5 Hybrid Korea (DL3HEV.KOR) and Hyundai Ioniq 5 Korea (NEEV.KOR) on 260902 firmware.
-# Each part also checks the exact stock checksums before writing anything.
+# Projection patches are selected by the original file identities.
+# Each part also checks the expected checksums before writing anything.
 export PATH=/data/nemesis/bin:/sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin
 LOG=/data/nemesis/wireless.carplay.aa.log
 PARTS="1_projection 2_tbt 3_bridge 4_audio 5_menu"
@@ -41,6 +40,7 @@ trap mirror_logs EXIT
 
 CARS_DIR=patches
 . ./scripts/cars.sh
+. ./scripts/build.sh
 
 part_name() {
     case "$1" in
@@ -209,31 +209,67 @@ wifi_hw() {
     fi
 }
 
-# decide_mode: MODE=full or basic (MODE_WHY says why); sets PARTS/PARTS_REV.
-# MODE_UPDATE=1 when it's a car we support on firmware other than the one its build
-# is for: we only support each car's newest firmware, so the owner should update.
-# Full mode leaves the rebuilt apps in the build dir for the parts.
+# Resolve the original content before building; product labels only name the car.
+# Unknown content keeps basic projection available on a fresh installation.
 decide_mode() {
+    local _resolve=0
     MODE=full
     MODE_WHY=""
-    MODE_UPDATE=""
-    if ! car_name >/dev/null; then
-        MODE_WHY="no build for this car/firmware yet ($(getprop ro.build.product 2>/dev/null))"
+    clean_build
+    if [ -e "$CATALOG_SELECTION" ] && ! catalog_validate_selection "$CATALOG_SELECTION"; then
+        log "FAIL: invalid installed patch selection; restore the installed package first"
+        return 1
+    fi
+    mkdir -p "$BUILD_DIR" || return 1
+    if ! catalog_inventory "$BUILD_DIR/inventory"; then
+        clean_build
+        return 1
+    fi
+    catalog_resolve "$BUILD_DIR/inventory" "$BUILD_DIR/selection" || _resolve=$?
+    if [ "$_resolve" = 2 ]; then
+        clean_build
+        log "FAIL: could not save patch selection"
+        return 1
+    fi
+    if [ "$_resolve" != 0 ]; then
+        MODE_WHY="the original projection files do not identify one compatible patch family"
     elif ! check_cluster_api; then
         MODE_WHY="cluster API missing for turn-by-turn"
     else
-        . ./scripts/build.sh
+        if [ -e "$CATALOG_SELECTION" ] && ! cmp "$CATALOG_SELECTION" "$BUILD_DIR/selection" >/dev/null 2>&1; then
+            clean_build
+            log "FAIL: original files conflict with the installed patch selection"
+            return 1
+        fi
+        cp "$BUILD_DIR/selection" "$CATALOG_SELECTION.new" &&
+            chmod 600 "$CATALOG_SELECTION.new" &&
+            mv "$CATALOG_SELECTION.new" "$CATALOG_SELECTION" || { rm -f "$CATALOG_SELECTION.new"; clean_build; return 1; }
         if ! build_payloads; then
             clean_build
-            MODE_WHY="this firmware's projection apps don't match the build for $(car_name) (only each car's newest firmware is supported: update the head unit's software)"
-            MODE_UPDATE=1
+            log "FAIL: could not rebuild the selected projection patches"
+            return 1
         fi
     fi
     if [ -n "$MODE_WHY" ]; then
+        clean_build
+        # Never silently downgrade an installed full feature group.
+        if [ -e "$CATALOG_SELECTION" ] || [ -d "$CATALOG_BACKUP" ]; then
+            log "FAIL: $MODE_WHY; existing projection state requires restoration"
+            return 1
+        fi
         MODE=basic
         PARTS=$BASIC_PARTS
         PARTS_REV=$BASIC_PARTS
     fi
+    return 0
+}
+
+# A refused fresh installation has no restoration state to retain. Existing
+# parts or original backups keep their selection until restoration succeeds.
+discard_uninstalled_selection() {
+    [ -s "$PARTS_FILE" ] && return 0
+    [ -d "$CATALOG_BACKUP" ] && return 0
+    rm -f "$CATALOG_SELECTION" "$CATALOG_SELECTION.new"
 }
 
 # installed_parts_rev: the installed parts, newest first (all parts for installs
